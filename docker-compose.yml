@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: langchain-streamlit-dev
+    ports:
+      - "8501:8501"
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    working_dir: /app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sleep infinity
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: langchain_user
+      POSTGRES_PASSWORD: langchain_password
+      POSTGRES_DB: langchain_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_langchain_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U langchain_user -d langchain_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: dev_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: jjpardo2002@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: SuperSegura123
+    ports:
+      - "8080:80"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_langchain_data:

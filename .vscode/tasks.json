@@ -1,0 +1,27 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run Streamlit App",
+      "type": "shell",
+      "command": "streamlit run app/main.py --server.address=0.0.0.0 --server.port=8501",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Check Python Version",
+      "type": "shell",
+      "command": "python --version",
+      "problemMatcher": []
+    },
+    {
+      "label": "Install Requirements",
+      "type": "shell",
+      "command": "pip install --no-cache-dir -r requirements.txt",
+      "problemMatcher": []
+    }
+  ]
+}
