@@ -5,7 +5,8 @@
   "workspaceFolder": "/app",
   "runServices": [
     "app",
-    "postgres"
+    "db",
+    "pgadmin"
   ],
   "shutdownAction": "stopCompose",
   "customizations": {

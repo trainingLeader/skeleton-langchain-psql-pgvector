@@ -12,12 +12,12 @@ services:
       - .env
     working_dir: /app
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     command: sleep infinity
 
-  postgres:
-    image: postgres:16-alpine
+  db:
+    image: pgvector/pgvector:pg16
     container_name: postgres-dev
     restart: unless-stopped
     environment:
@@ -42,7 +42,7 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - postgres
+      - db
 
 volumes:
   postgres_langchain_data:
